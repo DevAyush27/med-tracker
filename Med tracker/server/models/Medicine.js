@@ -5,7 +5,10 @@ const MedicineSchema = new mongoose.Schema({
   name: { type: String, required: true },
   dose: { type: String, required: true },
   schedule: [{ type: Date, required: true }],
-  takenHistory: [{ type: Date }],
+  takenHistory: [{
+    date: { type: Date, required: true },
+    status: { type: String, enum: ['taken', 'missed'], required: true }
+  }],
 });
 
 module.exports = mongoose.model('Medicine', MedicineSchema); 

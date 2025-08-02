@@ -1,14 +1,24 @@
-  const dotenv = require('dotenv');
-  dotenv.config();
-  console.log('MONGO_URI:', process.env.MONGO_URI);
-  const express = require('express');
-  const mongoose = require('mongoose');
-  const cors = require('cors');
-  const authRoutes = require('./routes/auth');
-  const medicineRoutes = require('./routes/medicine');
+const dotenv = require('dotenv');
+dotenv.config();
 
+// Set default environment variables if not provided
+if (!process.env.MONGO_URI) {
+  process.env.MONGO_URI = 'mongodb://localhost:27017/medtracker';
+}
+if (!process.env.JWT_SECRET) {
+  process.env.JWT_SECRET = 'your_super_secret_jwt_key_here_make_it_long_and_secure_2024';
+}
 
-  const app = express();
+console.log('MONGO_URI:', process.env.MONGO_URI);
+console.log('JWT_SECRET configured:', !!process.env.JWT_SECRET);
+
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const authRoutes = require('./routes/auth');
+const medicineRoutes = require('./routes/medicine');
+
+const app = express();
 
   app.use(cors());
   app.use(express.json());
